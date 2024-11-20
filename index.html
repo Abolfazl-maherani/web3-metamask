@@ -201,9 +201,10 @@
             try {
 
                 if (this.isInstallMetaMask) {
-                    const [account = undefined] = await ethereum?.enable()
-                    this.account = account;
-                    if (account) {
+
+
+                    if (this.getWalletStorage) {
+                        this.account = this.getWalletStorage;
                         this.web3 = new Web3(window.ethereum)
                         await this.getWalletBalance(account)
                     }
