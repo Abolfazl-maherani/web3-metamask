@@ -141,6 +141,7 @@
 
     const app = createApp({
         account: null,
+        isConnected: false,
         walletDetail: null,
         loadingConnectToWallet: false,
         web3: null,
@@ -157,20 +158,22 @@
 
         // methods
         async connectToWallet() {
+            if (this.isConnected) return
             if (this.isInstallMetaMask) {
                 try {
-                    if (!await window.ethereum.isConnected()) {
-                        const [account = undefined] = await ethereum.request({
-                            method: 'eth_requestAccounts'
-                        })
-                        this.account = account
-                        if (account) {
-                            localStorage.setItem('connectedWallet', account);
-                            this.web3 = new Web3(window.ethereum);
-                            this.getWalletBalance(account)
-                            console.log('connect to wallet', account)
-                        }
+
+                    const [account = undefined] = await ethereum.request({
+                        method: 'eth_requestAccounts'
+                    })
+                    this.account = account
+                    this.isConnected = true
+                    if (account) {
+                        localStorage.setItem('connectedWallet', account);
+                        this.web3 = new Web3(window.ethereum);
+                        this.getWalletBalance(account)
+                        console.log('connect to wallet', account)
                     }
+
 
                 } catch (e) {
                     console.log(e)
@@ -206,6 +209,7 @@
                     if (this.getWalletStorage) {
                         this.account = this.getWalletStorage;
                         this.web3 = new Web3(window.ethereum)
+                        this.isConnected = true
                         await this.getWalletBalance(account)
                     }
 
