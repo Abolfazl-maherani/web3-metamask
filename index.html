@@ -1,206 +1,209 @@
-    <!doctype html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Smart contract with metamask</title>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Smart contract with metamask</title>
 
-    </head>
-    <body>
-    <div @vue:mounted="mounted" id="app">
-        <header class="bg-blue-100 py-5">
-            <div class="container">
-                <div class="flex justify-between items-center">
-                    <nav class="">
-                        <ul class="flex gap-4 items-center">
-                            <li class="capitalize"><a href="#">link a</a></li>
-                            <li class="capitalize"><a href="#">link b</a></li>
+</head>
+<body>
+<div @vue:mounted="mounted" id="app">
+    <header class="bg-blue-100 py-5">
+        <div class="container">
+            <div class="flex justify-between items-center">
+                <nav class="">
+                    <ul class="flex gap-4 items-center">
+                        <li class="capitalize"><a href="#">link a</a></li>
+                        <li class="capitalize"><a href="#">link b</a></li>
 
-                        </ul>
-                    </nav>
-                    <button @click="connectToWallet" class="bg-green-300 p-4 rounded-md font-bold py-2">Connect to wallet
-                    </button>
-                </div>
+                    </ul>
+                </nav>
+                <button @click="connectToWallet" class="bg-green-300 p-4 rounded-md font-bold py-2">Connect to wallet
+                </button>
             </div>
-        </header>
-        <main>
-            <div class="container">
-                <section>
-                    <div class="bg-red-100 mt-5 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <strong class="font-bold">Required!</strong>
-                        <span class="block sm:inline">Please use `metamask` for your wallet.</span>
-                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section>
+                <div class="bg-red-100 mt-5 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Required!</strong>
+                    <span class="block sm:inline">Please use `metamask` for your wallet.</span>
+                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
 
       </span>
-                    </div>
-                </section>
-                <section>
-                    <div class="max-w-sm w-full lg:max-w-full lg:flex">
+                </div>
+            </section>
+            <section>
+                <div class="max-w-sm w-full lg:max-w-full lg:flex">
 
-                        <div class=" border-0 border-gray-400 mt-5 max-w-[500px] mx-auto lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-                            <div class="relative flex flex-col text-gray-700 bg-white shadow-md md:w-96 rounded-xl bg-clip-border">
+                    <div class=" border-0 border-gray-400 mt-5 max-w-[500px] mx-auto lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+                        <div class="relative flex flex-col text-gray-700 bg-white shadow-md md:w-96 rounded-xl bg-clip-border">
 
-                                <div v-if="!isInstallMetaMask">
-                                    <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
-                                         role="alert">
-                                        <p class="font-bold">Please Install the Metamask wallet</p>
-                                        <hr class="my-4 bg-gray-400 border-gray-400">
-                                        <ul>
-                                            <li><a class="text-blue-400"
-                                                   href="https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/">Mozilla
+                            <div v-if="!isInstallMetaMask">
+                                <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+                                     role="alert">
+                                    <p class="font-bold">Please Install the Metamask wallet</p>
+                                    <hr class="my-4 bg-gray-400 border-gray-400">
+                                    <ul>
+                                        <li><a class="text-blue-400"
+                                               href="https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/">Mozilla
+                                            plugin</a></li>
+                                        <li>
+                                            <a class="text-blue-400"
+                                               href="https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">Chrome
                                                 plugin</a></li>
-                                            <li>
-                                                <a class="text-blue-400"
-                                                   href="https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">Chrome
-                                                    plugin</a></li>
-                                        </ul>
-                                    </div>
+                                    </ul>
                                 </div>
-                                <nav v-else
-                                     class="flex w-full md:min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
-                                    <div
-                                            class=" items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                        Wallet balance (ETH):
-                                        <br>
-                                        <div v-if="walletDetail?.balanceEther"
-                                             class="grid mt-1 ml-auto place-items-center justify-self-end">
-                                            <div
-                                                    class="relative grid items-center px-2 mt-5 py-1 font-sans text-xs font-bold text-gray-900 uppercase rounded-full select-none whitespace-nowrap bg-gray-900/10">
-                                                <span class="">{{walletDetail.balanceEther}}</span>
-                                            </div>
+                            </div>
+                            <nav v-else
+                                 class="flex w-full md:min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
+                                <div
+                                        class=" items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                                    Wallet balance (ETH):
+                                    <br>
+                                    <div v-if="walletDetail?.balanceEther"
+                                         class="grid mt-1 ml-auto place-items-center justify-self-end">
+                                        <div
+                                                class="relative grid items-center px-2 mt-5 py-1 font-sans text-xs font-bold text-gray-900 uppercase rounded-full select-none whitespace-nowrap bg-gray-900/10">
+                                            <span class="">{{walletDetail.balanceEther}}</span>
                                         </div>
                                     </div>
+                                </div>
 
-                                    <div
-                                            class=" items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                        Wallet balance (Wei):
-                                        <br>
-                                        <div v-if="walletDetail?.balanceWei"
-                                             class="grid mt-5 ml-auto place-items-center justify-self-end">
-                                            <div
-                                                    class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-gray-900 uppercase rounded-full select-none whitespace-nowrap bg-gray-900/10">
+                                <div
+                                        class=" items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                                    Wallet balance (Wei):
+                                    <br>
+                                    <div v-if="walletDetail?.balanceWei"
+                                         class="grid mt-5 ml-auto place-items-center justify-self-end">
+                                        <div
+                                                class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-gray-900 uppercase rounded-full select-none whitespace-nowrap bg-gray-900/10">
                                                 <span class="">
                                                     {{walletDetail.balanceWei}}
                                                 </span>
-                                            </div>
                                         </div>
                                     </div>
-                                    <div
-                                            class=" items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
-                                        Wallet Address:
-                                        <br>
-                                        <div v-if="walletDetail?.walletAddress"
-                                             class="grid mt-5 ml-auto place-items-center justify-self-end">
-                                            <div
-                                                    class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-gray-900 uppercase rounded-full select-none whitespace-nowrap bg-gray-900/10">
-                                                <span class="">{{walletDetail.walletAddress}}</span>
-                                            </div>
+                                </div>
+                                <div
+                                        class=" items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
+                                    Wallet Address:
+                                    <br>
+                                    <div v-if="walletDetail?.walletAddress"
+                                         class="grid mt-5 ml-auto place-items-center justify-self-end">
+                                        <div
+                                                class="relative grid items-center px-2 py-1 font-sans text-xs font-bold text-gray-900 uppercase rounded-full select-none whitespace-nowrap bg-gray-900/10">
+                                            <span class="">{{walletDetail.walletAddress}}</span>
                                         </div>
                                     </div>
-                                </nav>
-                            </div>
+                                </div>
+                            </nav>
                         </div>
                     </div>
-                </section>
+                </div>
+            </section>
 
-            </div>
-        </main>
-    </div>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/web3@4.15.0/dist/web3.min.js"></script>
-    <script src="./assets/js/js.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                container: {
-                    center: true,
-                    padding: '2rem',
-                },
-                extend: {
-                    colors: {
-                        clifford: '#da373d',
-                    }
+        </div>
+    </main>
+</div>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/web3@4.15.0/dist/web3.min.js"></script>
+<script src="./assets/js/js.js"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            container: {
+                center: true,
+                padding: '2rem',
+            },
+            extend: {
+                colors: {
+                    clifford: '#da373d',
                 }
             }
         }
-    </script>
-    <script type="module">
-        import {createApp} from 'https://unpkg.com/petite-vue?module'
+    }
+</script>
+<script type="module">
+    import {createApp} from 'https://unpkg.com/petite-vue?module'
 
-        const app = createApp({
-            account: null,
-            walletDetail: null,
-            loadingConnectToWallet: false,
-            web3: null,
-            // getters
-            get plusOne() {
-                return this.count + 1
-            },
-            get isInstallMetaMask() {
-                return !!window.ethereum
-            },
-            get getWalletStorage() {
-                return localStorage.getItem('walletAddress')
-            },
+    const app = createApp({
+        account: null,
+        walletDetail: null,
+        loadingConnectToWallet: false,
+        web3: null,
+        // getters
+        get plusOne() {
+            return this.count + 1
+        },
+        get isInstallMetaMask() {
+            return !!window.ethereum
+        },
+        get getWalletStorage() {
+            return localStorage.getItem('walletAddress')
+        },
 
-            // methods
-            async connectToWallet() {
-                if (this.isInstallMetaMask) {
-                    try {
-                        if (!await window.ethereum.isConnected()) {
-                            const [account = undefined] = await ethereum.request({
-                                method: 'eth_requestAccounts'
-                            })
-                            if (account) {
-                                localStorage.setItem('connectedWallet', account);
-                                this.web3 = new Web3(window.ethereum);
-                                this.getWalletBalance(account)
-                                console.log('connect to wallet', account)
-                            }
-                        }
-
-                    } catch (e) {
-                        console.log(e)
-                        alert(`can't connect to metamask wallet`)
-                    }
-                } else alert('the Metamask not installed')
-            },
-            async getWalletBalance(walletAddress) {
+        // methods
+        async connectToWallet() {
+            if (this.isInstallMetaMask) {
                 try {
-                    // Get the user's wallet address
-                    // Fetch balance in Wei (smallest unit of Ether)
-                    const balanceWei = await this.web3.eth.getBalance(walletAddress);
-                    // Convert balance from Wei to Ether
-                    const balanceEther = this.web3.utils.fromWei(balanceWei, 'ether');
-                    this.walletDetail = {
-                        balanceWei,
-                        balanceEther,
-                        walletAddress
+                    if (!await window.ethereum.isConnected()) {
+                        const [account = undefined] = await ethereum.request({
+                            method: 'eth_requestAccounts'
+                        })
+                        if (account) {
+                            localStorage.setItem('connectedWallet', account);
+                            this.web3 = new Web3(window.ethereum);
+                            this.getWalletBalance(account)
+                            console.log('connect to wallet', account)
+                        }
                     }
 
-
-                    return balanceEther; // Returns balance as a string
-                } catch (error) {
-                    console.error('Error fetching balance:', error);
+                } catch (e) {
+                    console.log(e)
+                    alert(`can't connect to metamask wallet`)
                 }
-            },
-            async reconnectWallet() {
-
-                if (this.isInstallMetaMask) {
-
-                    this.web3 = new Web3(window.ethereum)
-                    const [account] = await ethereum?.enable()
-                    if (account)
-                        await this.getWalletBalance(account)
+            } else alert('the Metamask not installed')
+        },
+        async getWalletBalance(walletAddress) {
+            try {
+                // Get the user's wallet address
+                // Fetch balance in Wei (smallest unit of Ether)
+                const balanceWei = await this.web3.eth.getBalance(walletAddress);
+                // Convert balance from Wei to Ether
+                const balanceEther = this.web3.utils.fromWei(balanceWei, 'ether');
+                this.walletDetail = {
+                    balanceWei,
+                    balanceEther,
+                    walletAddress
                 }
-            },
-            mounted() {
-                this.reconnectWallet()
+
+
+                return balanceEther; // Returns balance as a string
+            } catch (error) {
+                console.error('Error fetching balance:', error);
             }
-        }).mount('#app')
+        },
+        async reconnectWallet() {
 
-    </script>
-    </body>
-    </html>
+            if (this.isInstallMetaMask) {
+                const [account] = await ethereum?.enable()
+                if (account) {
+                    this.web3 = new Web3(window.ethereum)
+
+
+                    await this.getWalletBalance(account)
+                }
+
+            }
+        },
+        mounted() {
+            this.reconnectWallet()
+        }
+    }).mount('#app')
+
+</script>
+</body>
+</html>
